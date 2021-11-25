@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+
+double T, Iyy = 3800; //T:torque    I: moment of inertia
+double yaw = 0, rate_of_yaw = 0;//initialize with 0 
+double Time = 0, End_Time = 10, Delta_Time = 0.01;
+int LogTimer = 100; //to print the 0 second result
+double Accelration; //which called angular_velocity in the homework I asked about that but no answer..
+
+void Solve()
+{
+    do
+    {
+        T = 0.3 * Time;
+        Accelration = T / Iyy;
+        rate_of_yaw += Accelration * Delta_Time;//should be same as angular velocity
+        yaw += rate_of_yaw * Delta_Time;
+
+        if (LogTimer == 100)///every 100 steps of 10ms = one second
+        {
+            LogTimer = 0;
+            cout << "time: " << Time << "  yaw: " << yaw << endl;
+        }
+        LogTimer++;
+
+        Time += Delta_Time;
+    }    
+    while (Time < End_Time);
+}
+
+int main()
+{
+    Solve();
+}
+
